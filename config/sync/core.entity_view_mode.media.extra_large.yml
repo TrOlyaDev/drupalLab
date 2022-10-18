@@ -1,0 +1,10 @@
+uuid: 9e75dbe2-b434-4ee8-af66-b8f6cd899aa4
+langcode: en
+status: true
+dependencies:
+  module:
+    - media
+id: media.extra_large
+label: 'Extra large'
+targetEntityType: media
+cache: true

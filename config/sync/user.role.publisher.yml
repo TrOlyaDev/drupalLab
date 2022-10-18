@@ -1,0 +1,22 @@
+uuid: fa605148-ca9d-405c-abf3-18401114a89c
+langcode: en
+status: true
+dependencies:
+  config:
+    - node.type.blog
+    - workflows.workflow.editorial
+  module:
+    - content_moderation
+    - node
+    - toolbar
+id: publisher
+label: Publisher
+weight: 5
+is_admin: null
+permissions:
+  - 'access content overview'
+  - 'access toolbar'
+  - 'create blog content'
+  - 'edit any blog content'
+  - 'use editorial transition create_new_draft'
+  - 'use editorial transition publish'

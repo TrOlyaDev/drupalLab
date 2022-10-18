@@ -1,0 +1,22 @@
+uuid: d2d4a4fb-9b12-4cde-aab5-ac87af539105
+langcode: en
+status: true
+dependencies:
+  config:
+    - node.type.blog
+    - workflows.workflow.editorial
+  module:
+    - content_moderation
+    - node
+    - toolbar
+id: editor
+label: Editor
+weight: 4
+is_admin: null
+permissions:
+  - 'access content overview'
+  - 'access toolbar'
+  - 'create blog content'
+  - 'edit own blog content'
+  - 'use editorial transition create_new_draft'
+  - 'view own unpublished content'

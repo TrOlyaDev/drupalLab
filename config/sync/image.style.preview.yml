@@ -1,0 +1,15 @@
+uuid: 3738e444-febd-4a19-8941-0385b7d257c9
+langcode: en
+status: true
+dependencies: {  }
+name: preview
+label: 'Preview (200x150)'
+effects:
+  90e9fb1d-a46b-43e3-8a8e-58fd9f54ee2b:
+    uuid: 90e9fb1d-a46b-43e3-8a8e-58fd9f54ee2b
+    id: image_scale_and_crop
+    weight: 1
+    data:
+      width: 200
+      height: 150
+      anchor: center-center

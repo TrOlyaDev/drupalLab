@@ -1,0 +1,8 @@
+uuid: 219a2394-a9a1-49a3-af49-f63960f05241
+langcode: en
+status: true
+dependencies: {  }
+id: brochure_block
+label: 'Brochure Block'
+revision: 1
+description: 'Use this template to create promotional brochures.'

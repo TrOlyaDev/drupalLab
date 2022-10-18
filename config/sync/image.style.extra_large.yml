@@ -1,0 +1,15 @@
+uuid: a93ae7eb-e79f-4515-974a-b21254224752
+langcode: en
+status: true
+dependencies: {  }
+name: extra_large
+label: 'Extra large (800x600)'
+effects:
+  1139e76b-4819-48f6-9fa0-a00ca1b7f2dd:
+    uuid: 1139e76b-4819-48f6-9fa0-a00ca1b7f2dd
+    id: image_scale_and_crop
+    weight: 1
+    data:
+      width: 800
+      height: 600
+      anchor: center-center

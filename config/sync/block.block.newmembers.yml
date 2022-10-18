@@ -1,0 +1,33 @@
+uuid: cfd76c26-b060-403e-bbf7-a3dff659dc09
+langcode: en
+status: true
+dependencies:
+  content:
+    - 'block_content:basic:235bc589-054c-4600-b836-e13bf69e3629'
+  module:
+    - block_content
+    - user
+  theme:
+    - olivero
+id: newmembers
+theme: olivero
+region: sidebar
+weight: 0
+provider: null
+plugin: 'block_content:235bc589-054c-4600-b836-e13bf69e3629'
+settings:
+  id: 'block_content:235bc589-054c-4600-b836-e13bf69e3629'
+  label: Enjoy!
+  label_display: visible
+  provider: block_content
+  status: true
+  info: ''
+  view_mode: full
+visibility:
+  user_role:
+    id: user_role
+    negate: false
+    context_mapping:
+      user: '@user.current_user_context:current_user'
+    roles:
+      anonymous: anonymous
