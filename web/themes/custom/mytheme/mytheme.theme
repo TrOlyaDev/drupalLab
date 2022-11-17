@@ -1,0 +1,28 @@
+<?php
+
+/**
+ * @file
+ * This file demonstrate how preprocess hooks works
+ */
+
+/**
+ * Implements hook_preprocess_HOOK().
+ */
+function mytheme_preprocess_page(&$variables) {
+  $routeBlogsPage = "view.blogs.page_1";
+  $routeBlogNodePage = 'entity.node.canonical';
+  $currentRoute = \Drupal::routeMatch()->getRouteName();
+
+  if ($currentRoute === $routeBlogsPage) {
+    $variables['#attached']['library'][] = 'mytheme/my_library';
+    $variables['#attached']['library'][] = 'mytheme/masonry';
+  }
+  elseif (($currentRoute === $routeBlogNodePage) && isset($variables['node'])) {
+    $node = $variables['node'];
+    $nodeType = $node->getType();
+    $page = node_is_page($node);
+    if ($nodeType == 'blog' && $page) {
+      $variables['#attached']['library'][] = 'mytheme/my_library';
+    }
+  }
+}
