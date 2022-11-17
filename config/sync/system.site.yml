@@ -2,8 +2,8 @@ _core:
   default_config_hash: VDJxTZtQR21qB4lvOq8zszJZLvLKrSPQpdn2E3T71Ww
 langcode: en
 uuid: 82d977b3-2567-464d-9f59-7c367a3b8606
-name: 'My Drupal Lab Site'
-mail: no-reply@drupallab.com
+name: 'My Drupal Lab Site 2022'
+mail: drupallab2022@drupallab.com
 slogan: ''
 page:
   403: ''
