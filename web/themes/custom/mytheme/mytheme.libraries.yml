@@ -1,0 +1,21 @@
+global-css:
+  version: Version
+  css:
+    theme:
+      css/custom.css: { }
+
+my_library:
+  version: Version
+  css:
+    theme:
+      css/blogs.css: { }
+
+masonry:
+  css:
+    theme:
+      css/masonry.css: { }
+  js:
+    https://unpkg.com/masonry-layout@4/dist/masonry.pkgd.min.js: { type: external, minified: true }
+    js/masonry.js : { }
+  dependencies:
+    - core/jquery
