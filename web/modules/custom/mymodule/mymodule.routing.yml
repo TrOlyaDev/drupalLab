@@ -1,0 +1,31 @@
+mymodule.simplecontent:
+  path: '/mycustompath'
+  defaults:
+    _controller: '\Drupal\mymodule\Controller\FirstController::simpleContent'
+    _title: 'Simplicity is the ultimate sophistication'
+  requirements:
+    _permission: 'access content'
+
+mymodule.variablecontent:
+  path: '/mycustompath/{name_1}/{name_2}'
+  defaults:
+    _controller: '\Drupal\mymodule\Controller\FirstController::variableContent'
+    _title: 'Dynamic Greeting'
+  requirements:
+    _permission: 'access content'
+
+mymodule.useraddedmessage:
+  path: '/successaddeduser/{name}/{email}/{age}'
+  defaults:
+    _controller: '\Drupal\mymodule\Controller\UserInfoController::userSuccessAddedMessage'
+    _title: 'User has been added successfully'
+  requirements:
+    _permission: 'access content'
+
+mymodule.adduserform:
+  path: '/adduser'
+  defaults:
+    _form: '\Drupal\mymodule\Form\AddUserForm'
+    _title: 'Add new user'
+  requirements:
+    _permission: 'access content'
