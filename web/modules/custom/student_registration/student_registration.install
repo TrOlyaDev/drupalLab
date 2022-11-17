@@ -1,0 +1,113 @@
+<?php
+
+use \Drupal\Core\Database\Database;
+
+/**
+ * Implements hook_install().
+ */
+function student_registration_install($is_syncing) {
+
+}
+
+/**
+ * Implements hook_uninstall().
+ */
+function student_registration_uninstall($is_syncing) {
+
+}
+
+/**
+ * Implements hook_schema().
+ */
+function student_registration_schema() {
+  $schema['students'] = [
+    'description' => t('Stores data about students'),
+    'fields' => [
+      'sid' => [
+        'description' => 'Student ID',
+        'type' => 'serial',
+        'unsigned' => TRUE,
+        'not null' => TRUE,
+      ],
+      'student_name' => [
+        'description' => t('Student Name'),
+        'type' => 'varchar_ascii',
+        'length' => 128,
+        'not null' => TRUE,
+        'default' => '',
+      ],
+      'student_rollno' => [
+        'description' => t('Student Enrollment Number.'),
+        'type' => 'varchar_ascii',
+        'length' => 50,
+        'not null' => TRUE,
+        'default' => '',
+      ],
+      'student_mail' => [
+        'description' => t('Student Email'),
+        'type' => 'varchar_ascii',
+        'length' => 128,
+        'not null' => TRUE,
+        'default' => '',
+      ],
+      'student_phone' => [
+        'description' => t('Student Contact Number'),
+        'type' => 'varchar_ascii',
+        'length' => 20,
+        'not null' => FALSE,
+      ],
+      'student_dob' => [
+        'description' => t('Student Date of Birth'),
+        'type' => 'varchar',
+        'mysql_type' => 'datetime',
+        'not null' => TRUE,
+      ],
+      'student_gender' => [
+        'description' => t('Student Gender'),
+        'type' => 'varchar_ascii',
+        'length' => 20,
+        'not null' => FALSE,
+      ],
+      'average_mark' => [
+        'type' => 'numeric',
+        'description' => t("Average Mark"),
+        'precision' => 5,
+        'scale' => 2,
+        'not null' => TRUE,
+        'default' => 85.6,
+      ],
+    ],
+    'primary key' => [
+      'sid'
+    ],
+  ];
+
+  return $schema;
+}
+
+/**
+ * Implements hook_update_N().
+ */
+function student_registration_update_9001(&$sandbox) {
+  $average_mark = array(
+    'type' => 'numeric',
+    'description' => t("Average Mark"),
+    'precision' => 5,
+    'scale' => 2,
+    'not null' => TRUE,
+    'default' => 0,
+  );
+  $schema = Database::getConnection()->schema();
+  $schema->addField('students', 'average_mark', $average_mark);
+}
+
+/**
+ * Implements hook_update_N().
+ */
+function student_registration_update_9002(&$sandbox) {
+  $database = \Drupal::database();
+  $query = $database->update('students')
+    ->fields([
+      'average_mark' => 85.6,
+    ])->execute();
+}
