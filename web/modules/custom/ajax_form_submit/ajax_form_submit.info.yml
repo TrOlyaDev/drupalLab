@@ -1,0 +1,5 @@
+name: Ajax Form Submit
+type: module
+description: Module for ajax testing
+core_version_requirement: ^8.8 || ^9
+package: My Modules
