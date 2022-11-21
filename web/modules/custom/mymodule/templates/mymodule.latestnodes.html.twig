@@ -1,0 +1,14 @@
+<div>
+  {% for node in latestnodes %}
+    <div>
+      <div>
+        <div style="background-image: url({{ file_url(node.field_image) }});" class="latestnodes__field_image">
+          {# <img src="{{ file_url(node.field_image) }}" style="width: 100px; border-radius: 5px;">  #}
+        </div>
+        <span> <b> {{ node.title }} </b> </span>
+        <span> {{ node.created }} </span>
+        <span> {{ node.type}} </span>
+      </div>
+    </div>
+  {% endfor %}
+</div>

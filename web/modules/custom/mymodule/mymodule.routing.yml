@@ -29,3 +29,20 @@ mymodule.adduserform:
     _title: 'Add new user'
   requirements:
     _permission: 'access content'
+
+mymodule.latestnodes:
+  path: '/latestnodes'
+  defaults:
+    _controller: '\Drupal\mymodule\Controller\LatestNodesController::latestNodesList'
+    _title: "The Latest Nodes with field_image"
+  requirements:
+    _permission: 'access content'
+
+mymodule.latestnodeswithservice:
+  path: '/latestnodeswithservice'
+  defaults:
+    _controller: '\Drupal\mymodule\Controller\LatestNodesController::latestNodesListWithService'
+    _title: "The Latest Nodes with field_image using Latesnodes Service"
+  requirements:
+    _permission: 'access content'
+
