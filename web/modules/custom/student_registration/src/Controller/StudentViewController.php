@@ -9,13 +9,30 @@
 namespace Drupal\student_registration\Controller;
 
 use Drupal\Core\Controller\ControllerBase;
+use Drupal\Core\Database\Connection;
+use Symfony\Component\DependencyInjection\ContainerInterface;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
 class StudentViewController extends ControllerBase {
 
+  /**
+   * Database connection
+   * @var \Drupal\Core\Database\Connection
+   */
+  protected $database;
+
+  public function __construct(Connection $database) {
+    $this->database = $database;
+  }
+
+  public static function create(ContainerInterface $container) {
+    return new static(
+      $container->get('database')
+    );
+  }
+
   public function display($id) {
-    $database = \Drupal::database();
-    $query = $database->select('students', 's')
+    $query = $this->database->select('students', 's')
       ->fields('s')->condition('sid', $id, '=');
     $result = $query->execute()->fetch();
     if (!$result) {

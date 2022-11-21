@@ -8,12 +8,38 @@
 
 namespace Drupal\student_registration\Form;
 
-use Drupal\Core\Datetime\DrupalDateTime;
+use Drupal\Component\Utility\EmailValidator;
+use Drupal\Core\Database\Connection;
 use Drupal\Core\Form\FormBase;
 use Drupal\Core\Form\FormStateInterface;
+use Symfony\Component\DependencyInjection\ContainerInterface;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 
 class RegistrationForm extends FormBase {
+
+  /**
+   * Database connection
+   * @var \Drupal\Core\Database\Connection
+   */
+  protected $database;
+
+  /**
+   * Email validator
+   * @var \Drupal\Component\Utility\EmailValidator
+   */
+  protected $emailValidator;
+
+  public function __construct(Connection $database, EmailValidator $emailValidator) {
+    $this->database = $database;
+    $this->emailValidator = $emailValidator;
+  }
+
+  public static function create(ContainerInterface $container) {
+    return new static(
+      $container->get('database'),
+      $container->get('email.validator')
+    );
+  }
 
   /**
    * {@inheritDoc}
@@ -27,8 +53,7 @@ class RegistrationForm extends FormBase {
    */
   public function buildForm(array $form, FormStateInterface $form_state, $sid = NULL) {
     if ($sid) {
-      $database = \Drupal::database();
-      $query = $database->select('students', 's')
+      $query = $this->database->select('students', 's')
         ->fields('s')
         ->condition('sid', $sid)
         ->execute();
@@ -104,7 +129,7 @@ class RegistrationForm extends FormBase {
       $form_state->setErrorByName('student_phone', $this->t('Please enter a valid Contact Number'));
     }
     $studentMail = $form_state->getValue('student_mail');
-    if ($studentMail == !\Drupal::service('email.validator')->isValid($studentMail)) {
+    if ($studentMail == !$this->emailValidator->isValid($studentMail)) {
       $form_state->setErrorByName(
         'email',
         t('The email address %mail is not valid.', array('%mail' => $studentMail)));
@@ -125,14 +150,13 @@ class RegistrationForm extends FormBase {
     $sid = $formData['sid'];
     unset($formData['sid']);
 
-    $database = \Drupal::database();
     if ($sid) {
-      $query = $database->update('students')
+      $query = $this->database->update('students')
         ->fields($formData)
         ->condition('sid', $sid)
         ->execute();
     } else {
-      $query = $database->insert('students')
+      $query = $this->database->insert('students')
         ->fields($formData);
       $sid = $query->execute();
     }

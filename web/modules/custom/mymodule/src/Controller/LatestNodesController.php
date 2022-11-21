@@ -10,13 +10,32 @@ namespace Drupal\mymodule\Controller;
 
 use Drupal\Core\Controller\ControllerBase;
 use Drupal\file\Entity\File;
+use Drupal\mymodule\LatestNodes;
 use Drupal\node\Entity\Node;
+use Symfony\Component\DependencyInjection\ContainerInterface;
 
 class LatestNodesController extends ControllerBase {
 
+  /**
+   * Service for retrieving the latest nodes
+   * @var \Drupal\mymodule\LatestNodes
+   */
+  protected $latestNodesService;
+
+  public function __construct(LatestNodes $latestNodes) {
+    $this->latestNodesService = $latestNodes;
+  }
+
+  public static function create(ContainerInterface $container) {
+    return
+      new static(
+        $container->get('mymodule.latestnodes')
+      );
+  }
+
   public function latestNodesList() {
-    $entityQuery = \Drupal::entityQuery('node');
-    $node_ids = $entityQuery->sort('created', 'DESC')
+    $query = $this->entityTypeManager()->getStorage('node')->getQuery();
+    $node_ids = $query->sort('created', 'DESC')
       ->exists('field_image')
       ->execute();
     $nodes = Node::loadMultiple($node_ids);
@@ -37,7 +56,7 @@ class LatestNodesController extends ControllerBase {
   }
 
   public function latestNodesListWithService() {
-    $nodes = \Drupal::service('mymodule.latestnodes')->nodeList();
+    $nodes = $this->latestNodesService->nodeList();
     $nodesForPrint = [];
     foreach ($nodes as $node) {
       $nodesForPrint[] = [

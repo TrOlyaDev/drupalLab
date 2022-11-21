@@ -2,17 +2,14 @@
 
 namespace Drupal\mymodule;
 
+use Drupal\Core\Controller\ControllerBase;
 use Drupal\node\Entity\Node;
 
-class LatestNodes {
-
-  function __construct() {
-
-  }
+class LatestNodes extends ControllerBase {
 
   public function nodeList() {
-    $entityQuery = \Drupal::entityQuery('node');
-    $node_ids = $entityQuery->sort('created', 'DESC')
+    $query = $this->entityTypeManager()->getStorage('node')->getQuery();
+    $node_ids = $query->sort('created', 'DESC')
       ->exists('field_image')
       ->execute();
 
