@@ -1,0 +1,4 @@
+services:
+  mymodule.latestnodes:
+    class: Drupal\mymodule\LatestNodes
+    arguments: []

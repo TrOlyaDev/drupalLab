@@ -1,0 +1,7 @@
+survey.multistep:
+  path: '/multistep_survey'
+  defaults:
+    _form: '\Drupal\survey\Form\MultistepForm'
+    _title: 'MultistepForm'
+  requirements:
+    _permission: 'access content'
