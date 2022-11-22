@@ -6,13 +6,26 @@ use Drupal\node\Entity\Node;
 
 class LatestNodes {
 
-  function __construct() {
+  /**
+   * Entity Type Manager
+   * @var \Drupal\Core\Entity\EntityTypeManager
+   */
+  protected $entityTypeManager;
 
+  /**
+   * {@inheritDoc}
+   */
+  function __construct(EntityTypeManager $entityTypeManager) {
+    $this->entityTypeManager = $entityTypeManager;
   }
 
+  /**
+   * Create the latest nodes list
+   * @return \Drupal\Core\Entity\EntityBase[]|\Drupal\Core\Entity\EntityInterface[]|\Drupal\node\Entity\Node[]
+   */
   public function nodeList() {
-    $entityQuery = \Drupal::entityQuery('node');
-    $node_ids = $entityQuery->sort('created', 'DESC')
+    $query = $this->entityTypeManager()->getStorage('node')->getQuery();
+    $node_ids = $query->sort('created', 'DESC')
       ->exists('field_image')
       ->execute();
 

@@ -6,13 +6,37 @@
  * This form is wired to Drupal in registration_students.routing.yml
  */
 namespace Drupal\student_registration\Form;
+use Drupal\Core\Database\Connection;
 use Drupal\Core\Form\FormStateInterface;
 use Drupal\Core\Form\ConfirmFormBase;
+use Drupal\Core\Messenger\Messenger;
 use Drupal\Core\Url;
+use Symfony\Component\DependencyInjection\ContainerInterface;
 
 class DeleteForm extends ConfirmFormBase {
 
+  /**
+   * Student id
+   * @var integer
+   */
   public $sid;
+
+  /**
+   * Database connection
+   * @var \Drupal\Core\Database\Connection
+   */
+  protected $database;
+
+  public function __construct(Connection $database) {
+    $this->database = $database;
+  }
+
+  public static function create(ContainerInterface $container) {
+    return new static(
+      $container->get('database')
+    );
+  }
+
   /**
    * {@inheritdoc}
    */
@@ -60,11 +84,10 @@ class DeleteForm extends ConfirmFormBase {
    * {@inheritdoc}
    */
   public function submitForm(array &$form, FormStateInterface $form_state) {
-    $query = \Drupal::database();
-    $query->delete('students')
+    $this->database->delete('students')
       ->condition('sid', $this->sid, '=')
       ->execute();
-    \Drupal::messenger()->addMessage("succesfully deleted");
+    $this->messenger->addMessage("succesfully deleted");
     $form_state->setRedirect('student_registration.registrations');
   }
 }

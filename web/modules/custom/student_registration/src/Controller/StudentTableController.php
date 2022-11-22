@@ -9,10 +9,28 @@
 namespace Drupal\student_registration\Controller;
 
 use Drupal\Core\Controller\ControllerBase;
+use Drupal\Core\Database\Connection;
 use Drupal\Core\Link;
 use Drupal\Core\Url;
+use Symfony\Component\DependencyInjection\ContainerInterface;
 
 class StudentTableController extends ControllerBase {
+
+  /**
+   * Database connection
+   * @var \Drupal\Core\Database\Connection
+   */
+  protected $database;
+
+  public function __construct(Connection $database) {
+    $this->database = $database;
+  }
+
+  public static function create(ContainerInterface $container) {
+    return new static(
+      $container->get('database')
+    );
+  }
 
   public function display() {
     //create table header
@@ -24,8 +42,7 @@ class StudentTableController extends ControllerBase {
     ];
 
     //select data from db
-    $database = \Drupal::database();
-    $query = $database->select('students', 's')
+    $query = $this->database->select('students', 's')
       ->fields('s', ['sid', 'student_name', 'student_mail']);
     $rows = [];
     $results = $query->execute()->fetchAll();
