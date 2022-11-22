@@ -1,0 +1,5 @@
+name: Latest Node
+type: module
+description: Module for latest node output
+core_version_requirement: ^8.8 || ^9
+package: My Modules

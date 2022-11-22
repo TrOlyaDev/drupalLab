@@ -1,0 +1,4 @@
+services:
+  latestnode.latest_node:
+    class: Drupal\latestnode\LatestNode
+    arguments: ['@entity_type.manager']
