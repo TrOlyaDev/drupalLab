@@ -1,0 +1,11 @@
+<div>
+  {% for node in latestnodes %}
+    <div>
+      <div>
+        {{ node.url }}
+        <div> {{ node.type }} </div>
+        <div> {{ node.created }} </div>
+      </div>
+    </div>
+  {% endfor %}
+</div>
