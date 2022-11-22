@@ -2,6 +2,7 @@
 
 namespace Drupal\mymodule;
 
+use Drupal\Core\Entity\EntityTypeManager;
 use Drupal\node\Entity\Node;
 
 class LatestNodes {
