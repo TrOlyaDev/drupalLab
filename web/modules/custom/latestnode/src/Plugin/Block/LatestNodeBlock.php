@@ -58,6 +58,9 @@ class LatestNodeBlock extends BlockBase implements ContainerFactoryPluginInterfa
     $build['latestnode_block'] = [
       '#theme' => 'latestnode.block',
       '#latestnodes' => $nodesForPrint,
+      '#cache' => [
+        'max-age' => 0, //node_list, config
+      ],
     ];
 
     return $build;
