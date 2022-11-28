@@ -1,0 +1,7 @@
+latestnode.settings:
+  path: '/admin/config/latestnode/settings'
+  defaults:
+    _form: '\Drupal\latestnode\Form\LatestNodeConfigForm'
+    _title: 'Latest Node Block Settings'
+  requirements:
+    _permission: 'administer site configuration'
