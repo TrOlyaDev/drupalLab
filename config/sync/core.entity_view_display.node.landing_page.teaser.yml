@@ -7,13 +7,11 @@ dependencies:
     - field.field.node.landing_page.body
     - field.field.node.landing_page.field_media_images
     - node.type.landing_page
-    - views.view.media_images
   module:
     - layout_builder
     - layout_discovery
     - text
     - user
-    - views
 third_party_settings:
   layout_builder:
     enabled: true
@@ -73,20 +71,7 @@ third_party_settings:
         layout_settings:
           label: ''
           context_mapping: {  }
-        components:
-          e18ca983-0452-4754-9889-1ced95545be4:
-            uuid: e18ca983-0452-4754-9889-1ced95545be4
-            region: content
-            configuration:
-              id: 'views_block:media_images-block_1'
-              label: ''
-              label_display: visible
-              provider: views
-              context_mapping: {  }
-              views_label: ''
-              items_per_page: none
-            weight: 0
-            additional: {  }
+        components: {  }
         third_party_settings: {  }
 id: node.landing_page.teaser
 targetEntityType: node

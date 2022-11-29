@@ -1,22 +1,21 @@
-uuid: a7564463-469c-43c6-8c9b-7aa9ba91bbdc
+uuid: 8eecd348-d93b-4842-9496-500b5496df6e
 langcode: en
 status: true
 dependencies:
   config:
-    - core.entity_view_mode.media.extra_large
-    - field.storage.node.field_media_images
-    - media.type.image
+    - field.storage.node.body
+    - node.type.blog
   module:
-    - media
     - node
+    - text
     - user
-id: media_images_random
-label: 'Media images random'
+id: blog_random
+label: 'Blog random'
 module: views
 description: ''
 tag: ''
-base_table: media_field_data
-base_field: mid
+base_table: node_field_data
+base_field: nid
 display:
   default:
     id: default
@@ -24,28 +23,44 @@ display:
     display_plugin: default
     position: 0
     display_options:
-      title: 'Media images random'
+      title: 'Blog random'
       fields:
-        name:
-          id: name
-          table: media_field_data
-          field: name
+        title:
+          id: title
+          table: node_field_data
+          field: title
           relationship: none
           group_type: group
           admin_label: ''
-          entity_type: media
-          entity_field: media
           plugin_id: field
           label: ''
           exclude: false
           alter:
             alter_text: false
+            text: ''
             make_link: false
+            path: ''
             absolute: false
-            word_boundary: false
-            ellipsis: false
+            external: false
+            replace_spaces: false
+            path_case: none
+            trim_whitespace: false
+            alt: ''
+            rel: ''
+            link_class: ''
+            prefix: ''
+            suffix: ''
+            target: ''
+            nl2br: false
+            max_length: 0
+            word_boundary: true
+            ellipsis: true
+            more_link: false
+            more_link_text: ''
+            more_link_path: ''
             strip_tags: false
             trim: false
+            preserve_tags: ''
             html: false
           element_type: ''
           element_class: ''
@@ -73,12 +88,69 @@ display:
           multi_type: separator
           separator: ', '
           field_api_classes: false
-        field_media_images:
-          id: field_media_images
-          table: node__field_media_images
-          field: field_media_images
-          relationship: reverse__node__field_media_images
+        body:
+          id: body
+          table: node__body
+          field: body
+          relationship: none
+          group_type: group
+          admin_label: ''
           plugin_id: field
+          label: ''
+          exclude: false
+          alter:
+            alter_text: false
+            text: ''
+            make_link: false
+            path: ''
+            absolute: false
+            external: false
+            replace_spaces: false
+            path_case: none
+            trim_whitespace: false
+            alt: ''
+            rel: ''
+            link_class: ''
+            prefix: ''
+            suffix: ''
+            target: ''
+            nl2br: false
+            max_length: 0
+            word_boundary: true
+            ellipsis: true
+            more_link: false
+            more_link_text: ''
+            more_link_path: ''
+            strip_tags: false
+            trim: false
+            preserve_tags: ''
+            html: false
+          element_type: ''
+          element_class: ''
+          element_label_type: ''
+          element_label_class: ''
+          element_label_colon: false
+          element_wrapper_type: ''
+          element_wrapper_class: ''
+          element_default_classes: true
+          empty: ''
+          hide_empty: false
+          empty_zero: false
+          hide_alter_empty: true
+          click_sort_column: value
+          type: text_summary_or_trimmed
+          settings:
+            trim_length: 50
+          group_column: value
+          group_columns: {  }
+          group_rows: true
+          delta_limit: 0
+          delta_offset: 0
+          delta_reversed: false
+          delta_first_last: false
+          multi_type: separator
+          separator: ', '
+          field_api_classes: false
       pager:
         type: some
         options:
@@ -97,7 +169,7 @@ display:
       access:
         type: perm
         options:
-          perm: 'view media'
+          perm: 'access content'
       cache:
         type: none
         options: {  }
@@ -116,49 +188,13 @@ display:
             label: ''
             field_identifier: ''
           exposed: false
-      arguments:
-        nid:
-          id: nid
-          table: node_field_data
-          field: nid
-          relationship: reverse__node__field_media_images
-          group_type: group
-          admin_label: ''
-          entity_type: node
-          entity_field: nid
-          plugin_id: node_nid
-          default_action: default
-          exception:
-            value: all
-            title_enable: false
-            title: All
-          title_enable: false
-          title: ''
-          default_argument_type: node
-          default_argument_options: {  }
-          default_argument_skip_url: false
-          summary_options:
-            base_path: ''
-            count: true
-            override: false
-            items_per_page: 25
-          summary:
-            sort_order: asc
-            number_of_records: 0
-            format: default_summary
-          specify_validation: false
-          validate:
-            type: none
-            fail: 'not found'
-          validate_options: {  }
-          break_phrase: false
-          not: false
+      arguments: {  }
       filters:
         status:
           id: status
-          table: media_field_data
+          table: node_field_data
           field: status
-          entity_type: media
+          entity_type: node
           entity_field: status
           plugin_id: boolean
           value: '1'
@@ -167,29 +203,22 @@ display:
             operator: ''
             operator_limit_selection: false
             operator_list: {  }
-        bundle:
-          id: bundle
-          table: media_field_data
-          field: bundle
-          entity_type: media
-          entity_field: bundle
+        type:
+          id: type
+          table: node_field_data
+          field: type
+          entity_type: node
+          entity_field: type
           plugin_id: bundle
           value:
-            image: image
+            blog: blog
           expose:
             operator_limit_selection: false
             operator_list: {  }
       style:
         type: default
-        options:
-          row_class: ''
-          default_row_class: true
-          uses_fields: false
       row:
-        type: 'entity:media'
-        options:
-          relationship: none
-          view_mode: extra_large
+        type: fields
       query:
         type: views_query
         options:
@@ -198,17 +227,7 @@ display:
           distinct: false
           replica: false
           query_tags: {  }
-      relationships:
-        reverse__node__field_media_images:
-          id: reverse__node__field_media_images
-          table: media_field_data
-          field: reverse__node__field_media_images
-          relationship: none
-          group_type: group
-          admin_label: field_media_images
-          entity_type: media
-          plugin_id: entity_reverse
-          required: true
+      relationships: {  }
       header: {  }
       footer: {  }
       display_extenders: {  }
@@ -217,10 +236,10 @@ display:
       contexts:
         - 'languages:language_content'
         - 'languages:language_interface'
-        - url
+        - 'user.node_grants:view'
         - user.permissions
       tags:
-        - 'config:field.storage.node.field_media_images'
+        - 'config:field.storage.node.body'
   block_1:
     id: block_1
     display_title: Block
@@ -233,7 +252,7 @@ display:
       contexts:
         - 'languages:language_content'
         - 'languages:language_interface'
-        - url
+        - 'user.node_grants:view'
         - user.permissions
       tags:
-        - 'config:field.storage.node.field_media_images'
+        - 'config:field.storage.node.body'

@@ -1,0 +1,27 @@
+uuid: 17f22c84-eb97-49d7-876f-93e737ebbdea
+langcode: en
+status: false
+dependencies:
+  module:
+    - help
+    - system
+  theme:
+    - mytheme
+_core:
+  default_config_hash: VfPFqqxfkomud5CO8DUijw85QIl9GIxh_nIxLOYESxg
+id: mytheme_help
+theme: mytheme
+region: sidebar
+weight: -8
+provider: null
+plugin: help_block
+settings:
+  id: help_block
+  label: Help
+  label_display: '0'
+  provider: help
+visibility:
+  request_path:
+    id: request_path
+    negate: false
+    pages: /blogs
