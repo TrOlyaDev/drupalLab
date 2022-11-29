@@ -1,0 +1,15 @@
+uuid: 406f9409-3e04-4e61-84de-5b2f1f40bdaf
+langcode: en
+status: true
+dependencies: {  }
+name: masonry
+label: Masonry
+effects:
+  b5abb982-d58e-4f8e-8fd5-c5634282ff0d:
+    uuid: b5abb982-d58e-4f8e-8fd5-c5634282ff0d
+    id: image_scale_and_crop
+    weight: 1
+    data:
+      width: 200
+      height: 300
+      anchor: center-center

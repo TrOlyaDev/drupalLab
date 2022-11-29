@@ -1,0 +1,20 @@
+uuid: 7facde8a-594b-4180-9121-bc1095590679
+langcode: en
+status: true
+dependencies:
+  module:
+    - latestnode
+  theme:
+    - mytheme
+id: latestnodeblock
+theme: mytheme
+region: sidebar_top
+weight: -10
+provider: null
+plugin: latestnode_block
+settings:
+  id: latestnode_block
+  label: 'Latest Node Block'
+  label_display: visible
+  provider: latestnode
+visibility: {  }
