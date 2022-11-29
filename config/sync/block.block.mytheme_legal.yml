@@ -1,0 +1,25 @@
+uuid: fc0e0b0b-fd39-420b-af50-aacb42147ef6
+langcode: en
+status: true
+dependencies:
+  config:
+    - system.menu.legal
+  module:
+    - system
+  theme:
+    - mytheme
+id: mytheme_legal
+theme: mytheme
+region: footer
+weight: -9
+provider: null
+plugin: 'system_menu_block:legal'
+settings:
+  id: 'system_menu_block:legal'
+  label: Legal
+  label_display: visible
+  provider: system
+  level: 1
+  depth: 0
+  expand_all_items: false
+visibility: {  }

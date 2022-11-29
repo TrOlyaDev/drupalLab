@@ -4,6 +4,7 @@ module:
   admin_toolbar: 0
   admin_toolbar_search: 0
   admin_toolbar_tools: 0
+  ajax_form_submit: 0
   automated_cron: 0
   big_pipe: 0
   block: 0
@@ -26,6 +27,7 @@ module:
   help: 0
   history: 0
   image: 0
+  latestnode: 0
   layout_builder: 0
   layout_discovery: 0
   link: 0
@@ -33,6 +35,7 @@ module:
   media_library: 0
   menu_link_content: 0
   menu_ui: 0
+  mymodule: 0
   mysql: 0
   node: 0
   options: 0
@@ -43,6 +46,9 @@ module:
   search: 0
   shortcut: 0
   standard: 0
+  student: 0
+  student_registration: 0
+  survey: 0
   system: 0
   taxonomy: 0
   text: 0
@@ -57,4 +63,6 @@ module:
 theme:
   olivero: 0
   claro: 0
+  gin: 0
+  mytheme: 0
 profile: standard
