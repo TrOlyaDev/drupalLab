@@ -29,6 +29,7 @@ class LatestNodeBlock extends BlockBase implements ContainerFactoryPluginInterfa
 
   /**
    * Service latestnode.latest_node
+   *
    * @var \Drupal\latestnode\LatestNode
    */
   protected $latestNodeService;
@@ -51,7 +52,7 @@ class LatestNodeBlock extends BlockBase implements ContainerFactoryPluginInterfa
     foreach ($nodes as $node) {
       $nodesForPrint[] = [
         'type' => $node->getType(),
-        'created' => date('Y-m-d H:i:s',$node->getCreatedTime()),
+        'created' => date('Y-m-d H:i:s', $node->getCreatedTime()),
         'url' => $node->toLink()->toString(),
       ];
     }

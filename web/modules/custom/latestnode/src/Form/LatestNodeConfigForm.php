@@ -5,6 +5,9 @@ namespace Drupal\latestnode\Form;
 use Drupal\Core\Form\ConfigFormBase;
 use Drupal\Core\Form\FormStateInterface;
 
+/**
+ * Config form for LatestNodeBlock
+ */
 class LatestNodeConfigForm extends ConfigFormBase {
 
   /**

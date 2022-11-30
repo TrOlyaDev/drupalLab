@@ -15,25 +15,39 @@ use Drupal\Core\Form\FormStateInterface;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 
+/**
+ * Form for registration new students
+ */
 class RegistrationForm extends FormBase {
 
   /**
    * Database connection
+   *
    * @var \Drupal\Core\Database\Connection
    */
   protected $database;
 
   /**
    * Email validator
+   *
    * @var \Drupal\Component\Utility\EmailValidator
    */
   protected $emailValidator;
 
+  /**
+   * Create an instance of RegistrationForm
+   *
+   * @param \Drupal\Core\Database\Connection $database
+   * @param \Drupal\Component\Utility\EmailValidator $emailValidator
+   */
   public function __construct(Connection $database, EmailValidator $emailValidator) {
     $this->database = $database;
     $this->emailValidator = $emailValidator;
   }
 
+  /**
+   * {@inheritDoc}
+   */
   public static function create(ContainerInterface $container) {
     return new static(
       $container->get('database'),
@@ -132,7 +146,7 @@ class RegistrationForm extends FormBase {
     if ($studentMail == !$this->emailValidator->isValid($studentMail)) {
       $form_state->setErrorByName(
         'email',
-        t('The email address %mail is not valid.', array('%mail' => $studentMail)));
+        t('The email address %mail is not valid.', ['%mail' => $studentMail]));
     }
     if ($form_state->getValue('average_mark') > 100) {
       $form_state->setErrorByName('average_mark', $this->t('Please enter a valid Average Mark'));
@@ -141,7 +155,6 @@ class RegistrationForm extends FormBase {
 
   /**
    * {@inheritDoc}
-   * @throws \Exception
    */
   public function submitForm(array &$form, FormStateInterface $form_state) {
     $formData = $form_state->getValues();
@@ -155,7 +168,8 @@ class RegistrationForm extends FormBase {
         ->fields($formData)
         ->condition('sid', $sid)
         ->execute();
-    } else {
+    }
+    else {
       $query = $this->database->insert('students')
         ->fields($formData);
       $sid = $query->execute();

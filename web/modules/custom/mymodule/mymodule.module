@@ -35,24 +35,24 @@ function mymodule_preprocess_region(&$variables) {
         'contexts' => ['user.roles'],
       ],
     ];
-    foreach ( $currentUserRoles as $role) {
+    foreach ($currentUserRoles as $role) {
       $variables['elements']['userroles']['content']['#attributes']['class'][] = $role;
     }
   }
-     /*$variables['page']['footer']['#theme'] = 'mytemplate'; //[myblock]=[#theme => ]
-     $currentUserRoles = \Drupal::currentUser()->getRoles();
-     $variables['page']['footer']['#roles'] = $currentUserRoles;
-     $variables['#cache'] = [
-       'max-age' => 300,
-       'tags' => ['user.roles'],
-     ];
-     $roles = '';
-     foreach ($currentUserRoles as $role) {
-       $roles .= $role . ' ';
-     }
-     /*$variables['page']['footer']['#prefix'] = '<div class="' . $roles . '">';
-     $variables['page']['footer']['#suffix'] = '</div>';*/
-    //$variables['page']['footer']['#attributes']['class'][] = $currentUserRoles;*/
+  /*$variables['page']['footer']['#theme'] = 'mytemplate'; //[myblock]=[#theme => ]
+  $currentUserRoles = \Drupal::currentUser()->getRoles();
+  $variables['page']['footer']['#roles'] = $currentUserRoles;
+  $variables['#cache'] = [
+    'max-age' => 300,
+    'tags' => ['user.roles'],
+  ];
+  $roles = '';
+  foreach ($currentUserRoles as $role) {
+    $roles .= $role . ' ';
+  }
+  /*$variables['page']['footer']['#prefix'] = '<div class="' . $roles . '">';
+  $variables['page']['footer']['#suffix'] = '</div>';*/
+  //$variables['page']['footer']['#attributes']['class'][] = $currentUserRoles;*/
 }
 
 /**

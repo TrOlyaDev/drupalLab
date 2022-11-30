@@ -10,8 +10,16 @@ namespace Drupal\mymodule\Controller;
 
 use Drupal\Core\Controller\ControllerBase;
 
+/**
+ * Generates markup to be displayed
+ */
 class FirstController extends ControllerBase {
 
+  /**
+   * Generate simple markup
+   *
+   * @return array
+   */
   public function simpleContent() {
     return [
       '#type' => 'markup',
@@ -19,6 +27,14 @@ class FirstController extends ControllerBase {
     ];
   }
 
+  /**
+   * Generate markup with parameters
+   *
+   * @param $name_1
+   * @param $name_2
+   *
+   * @return array
+   */
   public function variableContent($name_1, $name_2) {
     return [
       '#type' => 'markup',

@@ -20,12 +20,14 @@ class LatestNode {
 
   /**
    * Entity Type Manager
+   *
    * @var \Drupal\Core\Entity\EntityTypeManager
    */
   protected $entityTypeManager;
 
   /**
    * Config Factory
+   *
    * @var \Drupal\latestnode\ConfigFactoryInterface
    */
   protected $configFactory;
@@ -40,6 +42,7 @@ class LatestNode {
 
   /**
    * Create the latest node list
+   *
    * @return \Drupal\Core\Entity\EntityBase[]|\Drupal\Core\Entity\EntityInterface[]|\Drupal\node\Entity\Node[]
    * @throws \Drupal\Component\Plugin\Exception\InvalidPluginDefinitionException
    * @throws \Drupal\Component\Plugin\Exception\PluginNotFoundException
@@ -51,7 +54,7 @@ class LatestNode {
     $nodeQuery = $this->entityTypeManager->getStorage('node')->getQuery();
     $node_id = $nodeQuery->condition('type', $node_type)
       ->sort('created', 'DESC')
-      ->range(0,$node_count)
+      ->range(0, $node_count)
       ->execute();
 
     return Node::loadMultiple($node_id);

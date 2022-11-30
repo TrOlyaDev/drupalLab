@@ -6,12 +6,21 @@ use Drupal\Core\Form\FormBase;
 use Drupal\Core\Form\FormStateInterface;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 
+/**
+ * Form for user data
+ */
 class AddUserForm extends FormBase {
 
+  /**
+   * {@inheritDoc}
+   */
   public function getFormId() {
     return 'mymodule_adduserform';
   }
 
+  /**
+   * {@inheritDoc}
+   */
   public function buildForm(array $form, FormStateInterface $form_state) {
     $form['name'] = [
       '#type' => 'textfield',
@@ -36,8 +45,11 @@ class AddUserForm extends FormBase {
     return $form;
   }
 
+  /**
+   * {@inheritDoc}
+   */
   public function submitForm(array &$form, FormStateInterface $form_state) {
-    $url = '/successaddeduser/' . $form['name']['#value'] . '/' . $form['email']['#value'] . '/' . $form['age']['#value'] ;
+    $url = '/successaddeduser/' . $form['name']['#value'] . '/' . $form['email']['#value'] . '/' . $form['age']['#value'];
     (new RedirectResponse($url))->send();
     exit(1);
   }

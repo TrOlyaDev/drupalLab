@@ -14,24 +14,41 @@ use Drupal\Core\Link;
 use Drupal\Core\Url;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 
+/**
+ * Controller to display students info in table format
+ */
 class StudentTableController extends ControllerBase {
 
   /**
    * Database connection
+   *
    * @var \Drupal\Core\Database\Connection
    */
   protected $database;
 
+  /**
+   * Create an instance of StudentTableController
+   *
+   * @param \Drupal\Core\Database\Connection $database
+   */
   public function __construct(Connection $database) {
     $this->database = $database;
   }
 
+  /**
+   * {@inheritDoc}
+   */
   public static function create(ContainerInterface $container) {
     return new static(
       $container->get('database')
     );
   }
 
+  /**
+   * Display the students info table
+   *
+   * @return array
+   */
   public function display() {
     //create table header
     $header_table = [

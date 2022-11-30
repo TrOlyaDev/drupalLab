@@ -11,6 +11,9 @@ namespace Drupal\survey\Form;
 use Drupal\Core\Form\FormBase;
 use Drupal\Core\Form\FormStateInterface;
 
+/**
+ * Form for the multistep survey
+ */
 class MultistepForm extends FormBase {
 
   /**
@@ -109,7 +112,7 @@ class MultistepForm extends FormBase {
       '#type' => 'submit',
       '#value' => $this->t('Prev'),
       '#submit' => ['::prevSubmit'],
-      '#limit_validation_errors' => array(),
+      '#limit_validation_errors' => [],
       '#access' => $step > 1,
       '#ajax' => [
         'callback' => '::myAjaxCallback',
@@ -144,6 +147,14 @@ class MultistepForm extends FormBase {
     return $form;
   }
 
+  /**
+   * Returns form
+   *
+   * @param array $form
+   * @param \Drupal\Core\Form\FormStateInterface $form_state
+   *
+   * @return array
+   */
   public function myAjaxCallback(array &$form, FormStateInterface $form_state) {
     return $form;
   }
@@ -178,6 +189,14 @@ class MultistepForm extends FormBase {
     $form_state->setRebuild(TRUE);
   }
 
+  /**
+   * Move to the next step of the survey
+   *
+   * @param array $form
+   * @param \Drupal\Core\Form\FormStateInterface $form_state
+   *
+   * @return void
+   */
   public function nextSubmit(array &$form, FormStateInterface $form_state) {
     $step = $form_state->get('step') ?? 1;
 
@@ -191,6 +210,14 @@ class MultistepForm extends FormBase {
     $form_state->setRebuild(TRUE);
   }
 
+  /**
+   * Move to the previous step of the survey
+   *
+   * @param array $form
+   * @param \Drupal\Core\Form\FormStateInterface $form_state
+   *
+   * @return void
+   */
   public function prevSubmit(array &$form, FormStateInterface $form_state) {
     $step = $form_state->get('step') ?? 1;
 

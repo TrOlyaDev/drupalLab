@@ -5,16 +5,22 @@ namespace Drupal\mymodule;
 use Drupal\Core\Entity\EntityTypeManager;
 use Drupal\node\Entity\Node;
 
+/**
+ * Creates the latest nodes with field_image list
+ */
 class LatestNodes {
 
   /**
    * Entity Type Manager
+   *
    * @var \Drupal\Core\Entity\EntityTypeManager
    */
   protected $entityTypeManager;
 
   /**
-   * {@inheritDoc}
+   * Create an instance of LatestNodes
+   *
+   * @param \Drupal\Core\Entity\EntityTypeManager $entityTypeManager
    */
   function __construct(EntityTypeManager $entityTypeManager) {
     $this->entityTypeManager = $entityTypeManager;
@@ -22,6 +28,7 @@ class LatestNodes {
 
   /**
    * Create the latest nodes list
+   *
    * @return \Drupal\Core\Entity\EntityBase[]|\Drupal\Core\Entity\EntityInterface[]|\Drupal\node\Entity\Node[]
    */
   public function nodeList() {
