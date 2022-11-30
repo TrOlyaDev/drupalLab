@@ -2,7 +2,7 @@
 
   'use strict';
 
-  Drupal.behaviors.my_theme_masonry= {
+  Drupal.behaviors.my_theme_masonry = {
     attach: function (context, settings) {
       $('.grid', context).masonry({
         // options

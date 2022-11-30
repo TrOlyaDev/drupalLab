@@ -1,6 +1,11 @@
 <?php
 
 /**
+ * @file
+ * This file implements hooks for latestnode module.
+ */
+
+/**
  * Implements hook_theme().
  */
 function latestnode_theme($existing, $type, $theme, $path) {

@@ -7,6 +7,9 @@ use Drupal\Core\Form\FormBase;
 use Drupal\Core\Ajax\AjaxResponse;
 use Drupal\Core\Ajax\HtmlCommand;
 
+/**
+ * Simple ajax form, that can add two integers and display the sum.
+ */
 class AjaxSubmitDemo extends FormBase {
 
   /**
@@ -23,7 +26,7 @@ class AjaxSubmitDemo extends FormBase {
 
     $form['message'] = [
       '#type' => 'markup',
-      '#markup' => '<div class="result_message"></div>'
+      '#markup' => '<div class="result_message"></div>',
     ];
 
     $form['number_1'] = [
@@ -48,8 +51,8 @@ class AjaxSubmitDemo extends FormBase {
   }
 
   /**
-   * My ajax callback function
-   * Returns message with sum of two arguments
+   * Returns message with sum of two arguments.
+   *
    * @param array $form
    * @param \Drupal\Core\Form\FormStateInterface $form_state
    *
@@ -60,13 +63,16 @@ class AjaxSubmitDemo extends FormBase {
     $response->addCommand(
       new HtmlCommand(
         '.result_message',
-        '<div class="my_top_message">' . t('The results is @result', ['@result' => ($form_state->getValue('number_1') + $form_state->getValue('number_2'))]) . '</div>'),
+        '<div class="my_top_message">' . $this->t('The results is @result', ['@result' => ($form_state->getValue('number_1') + $form_state->getValue('number_2'))]) . '</div>'),
     );
     return $response;
   }
 
+  /**
+   * {@inheritDoc}
+   */
   public function submitForm(array &$form, FormStateInterface $form_state) {
-    // TODO: Implement submitForm() method.
+    // @todo Implement submitForm() method.
   }
 
 }

@@ -1,18 +1,28 @@
 <?php
 
-/**
- * @file
- * Generates markup to be displayed.
- * Functionality of this Controller is wired to Drupal in mymodule.routing.yml
- */
-
 namespace Drupal\mymodule\Controller;
 
 use Drupal\Core\Controller\ControllerBase;
 
+/**
+ * Generates markup with parameters to be displayed.
+ */
 class UserInfoController extends ControllerBase {
 
-  public function userSuccessAddedMessage($name, $email, $age) {
+  /**
+   * Generates markup with data from AddUserForm.
+   *
+   * @param string $name
+   *   User's name.
+   * @param string $email
+   *   User's email.
+   * @param int $age
+   *   User's age.
+   *
+   * @return array
+   *   Array with markup
+   */
+  public function userSuccessAddedMessage(string $name, string $email, int $age): array {
     return [
       '#type' => 'markup',
       '#markup' => t('User @name with email @email and age @age added.',

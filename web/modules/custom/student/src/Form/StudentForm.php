@@ -26,13 +26,17 @@ class StudentForm extends ContentEntityForm {
 
     switch ($result) {
       case SAVED_NEW:
-        $this->messenger()->addStatus($this->t('New student %label has been created.', $message_arguments));
-        $this->logger('student')->notice('Created new student %label', $logger_arguments);
+        $this->messenger()
+          ->addStatus($this->t('New student %label has been created.', $message_arguments));
+        $this->logger('student')
+          ->notice('Created new student %label', $logger_arguments);
         break;
 
       case SAVED_UPDATED:
-        $this->messenger()->addStatus($this->t('The student %label has been updated.', $message_arguments));
-        $this->logger('student')->notice('Updated student %label.', $logger_arguments);
+        $this->messenger()
+          ->addStatus($this->t('The student %label has been updated.', $message_arguments));
+        $this->logger('student')
+          ->notice('Updated student %label.', $logger_arguments);
         break;
     }
 

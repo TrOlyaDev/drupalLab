@@ -1,16 +1,13 @@
 <?php
 
-/**
- * @file
- * Multistep Ajax Form
- * This form is wired to Drupal in registration_students.routing.yml
- */
-
 namespace Drupal\survey\Form;
 
 use Drupal\Core\Form\FormBase;
 use Drupal\Core\Form\FormStateInterface;
 
+/**
+ * Form for the multistep survey.
+ */
 class MultistepForm extends FormBase {
 
   /**
@@ -24,17 +21,17 @@ class MultistepForm extends FormBase {
    * {@inheritDoc}
    */
   public function buildForm(array $form, FormStateInterface $form_state) {
-    //current step
+    // Current step.
     $step = $form_state->get('step') ?? 1;
 
-    //step titles
+    // Step titles.
     $step_titles = [
       $this->t('Personal Data'),
       $this->t('Parameters'),
       $this->t('Survey'),
     ];
 
-    //form title
+    // Form title.
     $form['title'] = [
       '#type' => 'item',
       '#title' => $this->t('Step :step from 3: :title_form - :title_step', [
@@ -44,21 +41,21 @@ class MultistepForm extends FormBase {
       ]),
     ];
 
-    //form fields
-    //step 1 fields
+    // Form fields
+    // step 1 fields.
     $form['step1']['name'] = [
       '#type' => 'textfield',
-      '#title' => t('Name:'),
+      '#title' => $this->t('Name:'),
       '#default_value' => $form_state->getValue('name'),
       '#access' => $step === 1,
     ];
     $form['step1']['surname'] = [
       '#type' => 'textfield',
-      '#title' => t('Surname:'),
+      '#title' => $this->t('Surname:'),
       '#default_value' => $form_state->getValue('surname'),
       '#access' => $step === 1,
     ];
-    //step 2 fields
+    // Step 2 fields.
     $form['step2']['age'] = [
       '#type' => 'select',
       '#title' => $this->t('Age:'),
@@ -68,7 +65,7 @@ class MultistepForm extends FormBase {
         '25-35' => '25-30',
         'over35' => $this->t('Over 35'),
       ],
-      '#default_value' => $form_state->getValue('age') ?? $form_state->get(['data', 'age']) ?? '18-25',
+      '#default_value' => $form_state->getValue('age') ?? $form_state->get(['data', 'age',]) ?? '18-25',
       '#access' => $step === 2,
     ];
     $form['step2']['gender'] = [
@@ -79,10 +76,10 @@ class MultistepForm extends FormBase {
         'female' => $this->t('Female'),
         'other' => $this->t('Other'),
       ],
-      '#default_value' => $form_state->getValue('gender') ?? $form_state->get(['data', 'gender']),
+      '#default_value' => $form_state->getValue('gender') ?? $form_state->get(['data', 'gender',]),
       '#access' => $step === 2,
     ];
-    //step 3 fields
+    // Step 3 fields.
     $form['step3']['interests'] = [
       '#type' => 'checkboxes',
       '#title' => $this->t('Interests:'),
@@ -92,7 +89,7 @@ class MultistepForm extends FormBase {
         'politics' => $this->t('Politics'),
         'gardening' => $this->t('Gardening'),
       ],
-      '#default_value' => $form_state->getValue('interests') ?? $form_state->get(['data', 'interests']) ?? [],
+      '#default_value' => $form_state->getValue('interests') ?? $form_state->get(['data', 'interests',]) ?? [],
       '#access' => $step === 3,
     ];
     $form['step3']['dreams'] = [
@@ -109,7 +106,7 @@ class MultistepForm extends FormBase {
       '#type' => 'submit',
       '#value' => $this->t('Prev'),
       '#submit' => ['::prevSubmit'],
-      '#limit_validation_errors' => array(),
+      '#limit_validation_errors' => [],
       '#access' => $step > 1,
       '#ajax' => [
         'callback' => '::myAjaxCallback',
@@ -136,7 +133,7 @@ class MultistepForm extends FormBase {
       ],
     ];
 
-    // Wrapper for ajax callback
+    // Wrapper for ajax callback.
     $form['#prefix'] = '<div id="survey-ajax-wrapper">';
     $form['#suffix'] = '</div>';
 
@@ -144,6 +141,14 @@ class MultistepForm extends FormBase {
     return $form;
   }
 
+  /**
+   * Returns form.
+   *
+   * @param array $form
+   * @param \Drupal\Core\Form\FormStateInterface $form_state
+   *
+   * @return array
+   */
   public function myAjaxCallback(array &$form, FormStateInterface $form_state) {
     return $form;
   }
@@ -159,12 +164,12 @@ class MultistepForm extends FormBase {
    * {@inheritdoc}
    */
   public function submitForm(array &$form, FormStateInterface $form_state) {
-    //save data
+    // Save data.
     $values = $form_state->getValues();
     $data = $form_state->get('data') ?? [];
     $data = array_merge($data, $values['step3']);
 
-    //message with input data
+    // Message with input data.
     foreach ($data as $key => $value) {
       $this->messenger()->addStatus($this->t(':key : :value', [
         ':key' => $key,
@@ -172,29 +177,45 @@ class MultistepForm extends FormBase {
       ]));
     }
 
-    //clean form
+    // Clean form.
     $form_state->set('data', []);
     $form_state->set('step', 1);
     $form_state->setRebuild(TRUE);
   }
 
-  public function nextSubmit(array &$form, FormStateInterface $form_state) {
+  /**
+   * Move to the next step of the survey.
+   *
+   * @param array $form
+   * @param \Drupal\Core\Form\FormStateInterface $form_state
+   *
+   * @return void
+   */
+  public function nextSubmit(array &$form, FormStateInterface $form_state): void {
     $step = $form_state->get('step') ?? 1;
 
-    //save data
+    // Save data.
     $values = $form_state->getValues();
     $data = $form_state->get('data') ?? [];
     $form_state->set('data', array_merge($data, $values['step' . $step]));
 
-    //next step
+    // Next step.
     $form_state->set('step', ++$step);
     $form_state->setRebuild(TRUE);
   }
 
-  public function prevSubmit(array &$form, FormStateInterface $form_state) {
+  /**
+   * Move to the previous step of the survey.
+   *
+   * @param array $form
+   * @param \Drupal\Core\Form\FormStateInterface $form_state
+   *
+   * @return void
+   */
+  public function prevSubmit(array &$form, FormStateInterface $form_state): void {
     $step = $form_state->get('step') ?? 1;
 
-    //save data
+    // Save data.
     $values = $form_state->getUserInput();
     $data = $form_state->get('data') ?? [];
     $form_state->set('data', array_merge($data, $values['step' . $step]));
@@ -202,7 +223,7 @@ class MultistepForm extends FormBase {
     // Restore step data.
     $form_state->setValues($data);
 
-    //previous step
+    // Previous step.
     $form_state->set('step', --$step);
     $form_state->setRebuild(TRUE);
   }
