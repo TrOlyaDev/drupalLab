@@ -2,7 +2,7 @@
 
 /**
  * @file
- * This file demonstrates how to use hook functions
+ * This file contains hook functions
  */
 
 /**
@@ -27,32 +27,17 @@ function mymodule_form_alter(&$form, \Drupal\Core\Form\FormStateInterface $form_
 function mymodule_preprocess_region(&$variables) {
   if ($variables['region'] == 'footer') {
     $currentUserRoles = \Drupal::currentUser()->getRoles();
-    $variables['elements']['userroles']['content'] = [
+    $variables['userroles'] = [
       '#theme' => 'mytemplate',
       '#roles' => $currentUserRoles,
       '#cache' => [
         'max-age' => 300,
         'contexts' => ['user.roles'],
       ],
+      '#prefix' => '<div class="' . implode(' ', $currentUserRoles) . '">',
+      '#suffix' => '</div>',
     ];
-    foreach ( $currentUserRoles as $role) {
-      $variables['elements']['userroles']['content']['#attributes']['class'][] = $role;
-    }
   }
-     /*$variables['page']['footer']['#theme'] = 'mytemplate'; //[myblock]=[#theme => ]
-     $currentUserRoles = \Drupal::currentUser()->getRoles();
-     $variables['page']['footer']['#roles'] = $currentUserRoles;
-     $variables['#cache'] = [
-       'max-age' => 300,
-       'tags' => ['user.roles'],
-     ];
-     $roles = '';
-     foreach ($currentUserRoles as $role) {
-       $roles .= $role . ' ';
-     }
-     /*$variables['page']['footer']['#prefix'] = '<div class="' . $roles . '">';
-     $variables['page']['footer']['#suffix'] = '</div>';*/
-    //$variables['page']['footer']['#attributes']['class'][] = $currentUserRoles;*/
 }
 
 /**
