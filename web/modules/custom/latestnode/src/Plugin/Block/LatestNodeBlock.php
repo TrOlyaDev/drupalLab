@@ -3,7 +3,9 @@
 namespace Drupal\latestnode\Plugin\Block;
 
 use Drupal\Core\Block\BlockBase;
+use Drupal\Core\Config\ConfigFactoryInterface;
 use Drupal\Core\Plugin\ContainerFactoryPluginInterface;
+use Drupal\Core\Render\Renderer;
 use Drupal\latestnode\LatestNode;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 
@@ -18,27 +20,34 @@ use Symfony\Component\DependencyInjection\ContainerInterface;
 class LatestNodeBlock extends BlockBase implements ContainerFactoryPluginInterface {
 
   /**
-   * Plugin id
-   */
-  public $id;
-
-  /**
-   * Admin label
-   */
-  public $admin_label;
-
-  /**
    * Service latestnode.latest_node
+   *
    * @var \Drupal\latestnode\LatestNode
    */
   protected $latestNodeService;
 
   /**
+   * The renderer
+   *
+   * @var \Drupal\Core\Render\Renderer
+   */
+  protected $renderer;
+
+  /**
+   * The config factory
+   *
+   * @var \Drupal\Core\Config\ConfigFactoryInterface
+   */
+  protected $configFactory;
+
+  /**
    * {@inheritDoc}
    */
-  public function __construct(array $configuration, $plugin_id, $plugin_definition, LatestNode $latestNodeService) {
+  public function __construct(array $configuration, $plugin_id, $plugin_definition, LatestNode $latestNodeService, Renderer $renderer, ConfigFactoryInterface $configFactory) {
     parent::__construct($configuration, $plugin_id, $plugin_definition);
     $this->latestNodeService = $latestNodeService;
+    $this->renderer = $renderer;
+    $this->configFactory = $configFactory;
   }
 
   /**
@@ -59,9 +68,10 @@ class LatestNodeBlock extends BlockBase implements ContainerFactoryPluginInterfa
       '#theme' => 'latestnode.block',
       '#latestnodes' => $nodesForPrint,
       '#cache' => [
-        'max-age' => 0, //node_list, config
+        'tags' => ['node_list'],
       ],
     ];
+    $this->renderer->addCacheableDependency($build, $this->configFactory->get('latestnode.settings'));
 
     return $build;
   }
@@ -74,7 +84,9 @@ class LatestNodeBlock extends BlockBase implements ContainerFactoryPluginInterfa
       $configuration,
       $plugin_id,
       $plugin_definition,
-      $container->get('latestnode.latest_node')
+      $container->get('latestnode.latest_node'),
+      $container->get('renderer'),
+      $container->get('config.factory')
     );
   }
 
