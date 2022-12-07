@@ -50,6 +50,9 @@ use Drupal\student\StudentInterface;
  */
 class Student extends ContentEntityBase implements StudentInterface {
 
+  /**
+   * {@inheritDoc}
+   */
   public static function baseFieldDefinitions(EntityTypeInterface $entity_type) {
     $fields = parent::baseFieldDefinitions($entity_type);
 

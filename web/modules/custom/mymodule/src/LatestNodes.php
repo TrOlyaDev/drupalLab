@@ -3,31 +3,37 @@
 namespace Drupal\mymodule;
 
 use Drupal\Core\Entity\EntityTypeManager;
-use Drupal\node\Entity\Node;
 
 /**
- * Service to extract the list the latest nodes with field_image
+ * Service to extract the list the latest nodes with field_image.
  */
 class LatestNodes {
 
   /**
-   * Entity Type Manager
+   * The entity type manager.
    *
    * @var \Drupal\Core\Entity\EntityTypeManager
    */
   protected $entityTypeManager;
 
   /**
-   * {@inheritDoc}
+   * Create an instance of LatestNodes.
+   *
+   * @param \Drupal\Core\Entity\EntityTypeManager $entityTypeManager
+   *   The entity type manager.
    */
-  function __construct(EntityTypeManager $entityTypeManager) {
+  public function __construct(EntityTypeManager $entityTypeManager) {
     $this->entityTypeManager = $entityTypeManager;
   }
 
   /**
-   * Create the latest nodes list
+   * Create the latest nodes list.
    *
    * @return \Drupal\Core\Entity\EntityBase[]|\Drupal\Core\Entity\EntityInterface[]|\Drupal\node\Entity\Node[]
+   *   The nodes list
+   *
+   * @throws \Drupal\Component\Plugin\Exception\InvalidPluginDefinitionException
+   * @throws \Drupal\Component\Plugin\Exception\PluginNotFoundException
    */
   public function nodeList() {
     $storage = $this->entityTypeManager->getStorage('node');

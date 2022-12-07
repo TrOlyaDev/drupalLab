@@ -6,43 +6,50 @@ use Drupal\Core\Config\ConfigFactoryInterface;
 use Drupal\Core\Entity\EntityTypeManager;
 
 /**
- * Service to extract the list of the latest nodes
+ * Service to extract the list of the latest nodes.
  */
 class LatestNode {
 
   /**
-   * Config id
+   * Config settings.
    *
    * @var string
    */
   const SETTINGS = 'latestnode.settings';
 
   /**
-   * Entity Type Manager
+   * The entity type manager.
    *
    * @var \Drupal\Core\Entity\EntityTypeManager
    */
   protected $entityTypeManager;
 
   /**
-   * Config Factory
+   * The config factory.
    *
-   * @var \Drupal\latestnode\ConfigFactoryInterface
+   * @var \Drupal\Core\Config\ConfigFactoryInterface
    */
   protected $configFactory;
 
   /**
-   * {@inheritDoc}
+   * Create an entity of LatestNode.
+   *
+   * @param \Drupal\Core\Entity\EntityTypeManager $entityTypeManager
+   *   The entity type manager.
+   * @param \Drupal\Core\Config\ConfigFactoryInterface $configFactory
+   *   The config factory.
    */
-  function __construct(EntityTypeManager $entityTypeManager, ConfigFactoryInterface $configFactory) {
+  public function __construct(EntityTypeManager $entityTypeManager, ConfigFactoryInterface $configFactory) {
     $this->entityTypeManager = $entityTypeManager;
     $this->configFactory = $configFactory;
   }
 
   /**
-   * Create the latest nodes list
+   * Create the latest nodes list.
    *
    * @return \Drupal\Core\Entity\EntityBase[]|\Drupal\Core\Entity\EntityInterface[]|\Drupal\node\Entity\Node[]
+   *   The nodes array.
+   *
    * @throws \Drupal\Component\Plugin\Exception\InvalidPluginDefinitionException
    * @throws \Drupal\Component\Plugin\Exception\PluginNotFoundException
    */
@@ -54,7 +61,7 @@ class LatestNode {
     $nodeQuery = $storage->getQuery();
     $node_id = $nodeQuery->condition('type', $node_type)
       ->sort('created', 'DESC')
-      ->range(0,$node_count)
+      ->range(0, $node_count)
       ->execute();
 
     return $storage->loadMultiple($node_id);

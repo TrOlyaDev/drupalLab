@@ -1,11 +1,5 @@
 <?php
 
-/**
- * @file
- * Form for registration new students
- * This form is wired to Drupal in registration_students.routing.yml
- */
-
 namespace Drupal\student_registration\Form;
 
 use Drupal\Component\Utility\EmailValidator;
@@ -15,25 +9,41 @@ use Drupal\Core\Form\FormStateInterface;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 
+/**
+ * Form for registration new students.
+ */
 class RegistrationForm extends FormBase {
 
   /**
-   * Database connection
+   * Database connection.
+   *
    * @var \Drupal\Core\Database\Connection
    */
   protected $database;
 
   /**
-   * Email validator
+   * Email validator.
+   *
    * @var \Drupal\Component\Utility\EmailValidator
    */
   protected $emailValidator;
 
+  /**
+   * Create an instance of RegistrationForm.
+   *
+   * @param \Drupal\Core\Database\Connection $database
+   *   Database connection.
+   * @param \Drupal\Component\Utility\EmailValidator $emailValidator
+   *   Email validator.
+   */
   public function __construct(Connection $database, EmailValidator $emailValidator) {
     $this->database = $database;
     $this->emailValidator = $emailValidator;
   }
 
+  /**
+   * {@inheritDoc}
+   */
   public static function create(ContainerInterface $container) {
     return new static(
       $container->get('database'),
@@ -65,47 +75,47 @@ class RegistrationForm extends FormBase {
     ];
     $form['student_name'] = [
       '#type' => 'textfield',
-      '#title' => t('Enter Name:'),
+      '#title' => $this->t('Enter Name:'),
       '#required' => TRUE,
       '#default_value' => ($sid && isset($data->student_name)) ? $data->student_name : '',
     ];
     $form['student_rollno'] = [
       '#type' => 'textfield',
-      '#title' => t('Enter Enrollment Number:'),
+      '#title' => $this->t('Enter Enrollment Number:'),
       '#required' => TRUE,
       '#default_value' => ($sid && isset($data->student_rollno)) ? $data->student_rollno : '',
     ];
     $form['student_mail'] = [
       '#type' => 'email',
-      '#title' => t('Enter Email ID:'),
+      '#title' => $this->t('Enter Email ID:'),
       '#required' => TRUE,
       '#default_value' => ($sid && isset($data->student_mail)) ? $data->student_mail : '',
     ];
     $form['student_phone'] = [
       '#type' => 'tel',
-      '#title' => t('Enter Contact Number'),
+      '#title' => $this->t('Enter Contact Number'),
       '#default_value' => ($sid && isset($data->student_phone)) ? $data->student_phone : '',
     ];
     $form['student_dob'] = [
       '#type' => 'date',
-      '#title' => t('Enter DOB:'),
+      '#title' => $this->t('Enter DOB:'),
       '#required' => TRUE,
       '#default_value' => ($sid && isset($data->student_dob)) ? date('Y-m-d', strtotime($data->student_dob)) : '',
     ];
     $form['student_gender'] = [
       '#type' => 'select',
-      '#title' => t('Select Gender:'),
+      '#title' => $this->t('Select Gender:'),
       '#options' => [
-        'Male' => t('Male'),
-        'Female' => t('Female'),
-        'Other' => t('Other'),
+        'Male' => $this->t('Male'),
+        'Female' => $this->t('Female'),
+        'Other' => $this->t('Other'),
       ],
       '#default_value' => ($sid && isset($data->student_gender)) ? $data->student_gender : '',
     ];
     $form['average_mark'] = [
       '#type' => 'number',
       '#step' => 0.01,
-      '#title' => t('Average Mark'),
+      '#title' => $this->t('Average Mark'),
       '#required' => TRUE,
       '#default_value' => ($sid && isset($data->average_mark)) ? $data->average_mark : '',
     ];
@@ -132,7 +142,7 @@ class RegistrationForm extends FormBase {
     if ($studentMail == !$this->emailValidator->isValid($studentMail)) {
       $form_state->setErrorByName(
         'email',
-        t('The email address %mail is not valid.', array('%mail' => $studentMail)));
+        $this->t('The email address %mail is not valid.', ['%mail' => $studentMail]));
     }
     if ($form_state->getValue('average_mark') > 100) {
       $form_state->setErrorByName('average_mark', $this->t('Please enter a valid Average Mark'));
@@ -141,7 +151,6 @@ class RegistrationForm extends FormBase {
 
   /**
    * {@inheritDoc}
-   * @throws \Exception
    */
   public function submitForm(array &$form, FormStateInterface $form_state) {
     $formData = $form_state->getValues();
@@ -155,7 +164,8 @@ class RegistrationForm extends FormBase {
         ->fields($formData)
         ->condition('sid', $sid)
         ->execute();
-    } else {
+    }
+    else {
       $query = $this->database->insert('students')
         ->fields($formData);
       $sid = $query->execute();

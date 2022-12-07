@@ -1,33 +1,28 @@
 <?php
 
-/**
- * @file
- * Output the latest nodes
- * Functionality of this Controller is wired to Drupal in mymodule.routing.yml
- */
-
 namespace Drupal\mymodule\Controller;
 
 use Drupal\Core\Controller\ControllerBase;
-use Drupal\Core\Entity\EntityTypeRepository;
-use Drupal\file\Entity\File;
 use Drupal\mymodule\LatestNodes;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 
 /**
- * Controller to output the list of the latest nodes with field_image
+ * Display the latest nodes list.
  */
 class LatestNodesController extends ControllerBase {
 
   /**
-   * Service for retrieving the latest nodes
+   * Service for retrieving the latest nodes.
    *
    * @var \Drupal\mymodule\LatestNodes
    */
   protected $latestNodesService;
 
   /**
-   * {@inheritdoc}
+   * Create an instance of LatestNodesController.
+   *
+   * @param \Drupal\mymodule\LatestNodes $latestNodes
+   *   The latestnodes service.
    */
   public function __construct(LatestNodes $latestNodes) {
     $this->latestNodesService = $latestNodes;
@@ -37,16 +32,17 @@ class LatestNodesController extends ControllerBase {
    * {@inheritDoc}
    */
   public static function create(ContainerInterface $container) {
-    return
-      new static(
-        $container->get('mymodule.latestnodes')
-      );
+    return new static(
+      $container->get('mymodule.latestnodes')
+    );
   }
 
   /**
-   * Display the latest nodes list
+   * Create and display the latest nodes list.
    *
    * @return array
+   *   The nodes array.
+   *
    * @throws \Drupal\Component\Plugin\Exception\InvalidPluginDefinitionException
    * @throws \Drupal\Component\Plugin\Exception\PluginNotFoundException
    */
@@ -64,18 +60,19 @@ class LatestNodesController extends ControllerBase {
     return [
       '#theme' => 'mymodule.latestnodes',
       '#latestnodes' => $nodes,
-      '#cache' =>[
+      '#cache' => [
         'tags' => ['node_list'],
-      ]
+      ],
     ];
   }
 
   /**
-   * Display the latest nodes list using custom service
+   * Create and display the latest nodes list using custom service.
    *
    * @return array
+   *   The nodes array.
    */
-  public function latestNodesListWithService() {
+  public function latestNodesListWithService(): array {
     $nodes = $this->latestNodesService->nodeList();
     foreach ($nodes as $node) {
       $node->teaser = $this->entityTypeManager()->getViewBuilder('node')->view($node, 'teaser');
@@ -84,9 +81,9 @@ class LatestNodesController extends ControllerBase {
     return [
       '#theme' => 'mymodule.latestnodes',
       '#latestnodes' => $nodes,
-      '#cache' =>[
+      '#cache' => [
         'tags' => ['node_list'],
-      ]
+      ],
     ];
   }
 

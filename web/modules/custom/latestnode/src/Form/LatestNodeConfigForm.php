@@ -9,7 +9,7 @@ use Drupal\Core\Form\FormStateInterface;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 
 /**
- * Class for implementing config form for LatestNodeBlock
+ * Config form for LatestNodeBlock.
  */
 class LatestNodeConfigForm extends ConfigFormBase {
 
@@ -21,7 +21,7 @@ class LatestNodeConfigForm extends ConfigFormBase {
   const SETTINGS = 'latestnode.settings';
 
   /**
-   * The entity type manager
+   * The entity type manager.
    *
    * @var \Drupal\Core\Entity\EntityTypeManager
    */
@@ -65,7 +65,8 @@ class LatestNodeConfigForm extends ConfigFormBase {
    * {@inheritdoc}
    */
   public function buildForm(array $form, FormStateInterface $form_state) {
-    $contentTypes = $this->entityTypeManager->getStorage('node_type')->loadMultiple();
+    $contentTypes = $this->entityTypeManager->getStorage('node_type')
+      ->loadMultiple();
     $contentTypesList = [];
     foreach ($contentTypes as $contentType) {
       $contentTypesList[$contentType->id()] = $contentType->label();
